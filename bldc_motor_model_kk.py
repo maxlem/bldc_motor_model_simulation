@@ -422,7 +422,7 @@ class BLDC_Motor:
 
 
 if __name__ == "__main__":
-    motor_data = json.load(open("./bldc_motor_data_kk.json"))
+    motor_data = json.load(open("./bldc_motor_data_kk_data.json"))
     bldc_motor = BLDC_Motor(motor_data)
     bldc_motor.check_back_emf_plot()
     bldc_motor.check_inverter_function_plot()

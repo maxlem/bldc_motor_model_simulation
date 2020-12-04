@@ -88,7 +88,7 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    bldc_motor_data_path    = "./bldc_motor_data_kk.json"
+    bldc_motor_data_path    = "./bldc_motor_data_kk_data.json"
     pi_controller_data_path = "./pi_controller_data.json"
     bldc_motor_data         = json.load(open(bldc_motor_data_path))
     pi_controller_data      = json.load(open(pi_controller_data_path))
