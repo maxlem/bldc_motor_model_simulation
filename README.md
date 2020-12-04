@@ -1,1 +1,1 @@
-# bldc_motor_model_simulation
+# bldc_motor_model
