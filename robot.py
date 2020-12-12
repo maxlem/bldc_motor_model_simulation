@@ -116,7 +116,7 @@ class Robot():
             if debug:
                 print("2, w refs", w_l_ref,  w_r_ref)
 
-
+            # BLACK BOX START
             u_dict_left_bldc_motor_driver = {
                 "w_ref": np.array([self.left_w_ref[i]]),
                 "T_l":   np.array([0])
@@ -128,11 +128,12 @@ class Robot():
 
             y_dict_left_bldc_motor_driver  = \
                 self.left_bldc_motor_driver.run_euler_simulation(self.dt, 1, u_dict_left_bldc_motor_driver)
-            w_m_left  = y_dict_left_bldc_motor_driver["w_m"][0]
-            
             y_dict_right_bldc_motor_driver = \
                 self.right_bldc_motor_driver.run_euler_simulation(self.dt, 1, u_dict_right_bldc_motor_driver)
+                
+            w_m_left  = y_dict_left_bldc_motor_driver["w_m"][0]
             w_m_right = y_dict_right_bldc_motor_driver["w_m"][0]
+            # BLACK BOX END
 
             if debug:
                 print("3 speeds", w_m_left,  w_m_right)
