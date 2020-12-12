@@ -95,11 +95,19 @@ if __name__ == "__main__":
 
     simulation = Simulation(bldc_motor_data, pi_controller_data)
     simulation_output_def, t_meas = simulation.run_simulation(noise=False)
+    # P = abs(simulation_output_def["i_a"]*simulation_output_def["v_a"])+ \
+    #     abs(simulation_output_def["i_b"]*simulation_output_def["v_b"])+ \
+    #     abs(simulation_output_def["i_c"]*simulation_output_def["v_c"])
+
+    # P2 = simulation_output_def["T_e"]*simulation_output_def["w_m"]
+
 
     # plot speed
     ylim_coeff = 1.2
     plt.plot(t_meas, simulation.w_ref, "-r", label="ωref")
-    plt.plot(t_meas, simulation_output_def["w_m"], "-b", label="ωm")
+    plt.plot(t_meas, simulation_output_def["w_m"], "-g", label="ωm")
+    # plt.plot(t_meas, P, "-g", label="ωm")
+    # plt.plot(t_meas, P2, "-b", label="ωm")
     plt.xlim([0, t_meas[-1]])
     plt.ylim([np.min(simulation_output_def["w_m"])*ylim_coeff, np.max(simulation_output_def["w_m"])*ylim_coeff])
     plt.xlabel("t[s]")

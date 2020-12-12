@@ -9,8 +9,8 @@ class PI_Controller:
         self.T_i = pi_controller_data["T_i"]
 
         self.A = np.matrix([0])
-        self.B = np.matrix([1])
-        self.C = np.matrix([self.K_p/self.T_i])
+        self.B = np.matrix([self.K_p/self.T_i])
+        self.C = np.matrix([1])
         self.D = np.matrix([self.K_p])
 
         x11 = pi_controller_data["init"]

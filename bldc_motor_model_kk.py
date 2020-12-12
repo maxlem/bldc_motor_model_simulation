@@ -447,7 +447,7 @@ if __name__ == "__main__":
     simulation_output = bldc_motor.simulation_euler(dt, iterations, u_dict)
 
     # plt.plot(t, v_s, label="Vs[V]")
-    plt.plot(t, simulation_output["w_m"], label="ωm[rad/s]")
+    plt.plot(t, simulation_output["T_e"], label="ωm[rad/s]")
     plt.xlim([t[0], t[-1]])
     plt.xlabel("t[s]")
     plt.legend(loc="upper right")
