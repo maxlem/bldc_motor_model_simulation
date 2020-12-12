@@ -39,7 +39,7 @@ class Robot():
         
         self.r = 0.5
 
-        self.x = np.array([[0], 
+        self.x = np.matrix([[0], 
                             [0], 
                             [0]])
 
@@ -140,49 +140,22 @@ class Robot():
             v_l = w_m_left*self.r
             v_r = w_m_right*self.r
 
-            if abs(v_r - v_l) < 0.001:
-                R = 99999999
-            else:
-                R = (self.l/2)*(v_l + v_r)/(v_r - v_l)
-            
-
-            w = (v_r - v_l)/self.l
-
-            if debug:
-                print("4 linear speeds", v_l,  v_r, R, w)
-
-            ICCx = self.x[0][0] - R*np.sin(self.x[2][0])
-            ICCy = self.x[1][0] + R*np.cos(self.x[2][0])
 
 
-            A = np.array([[np.cos(w*self.dt), -np.sin(w*self.dt), 0], 
-                          [np.sin(w*self.dt),  np.cos(w*self.dt), 0], 
-                          [0,                   0,                1]])  
-            xx = np.array([ [self.x[0][0]-ICCx], 
-                            [self.x[1][0]-ICCy], 
-                            [self.x[2][0]]])
-            Bu = np.array([ [ICCx], 
-                            [ICCy], 
-                            [w*self.dt]])
+            matrx11 = np.array(np.cos(self.x[2][0]))[0][0]
+            matrx12 = np.array(np.sin(self.x[2][0]))[0][0]
+            matr = np.matrix([[matrx11, matrx12, self.l], 
+                              [matrx11, matrx12,-self.l]])
+
+            v = np.matrix([[v_l], [v_r]])
+            self.x = self.x + np.transpose(matr)*v*self.dt
 
             if debug:
-                print("A")
-                print(A)
-                print("xx")
-                print(xx)
-                print("Bu")
-                print(Bu)
-                print("A@xx+Bu")
-                print(A@xx+Bu)
-
-            self.x = (A@xx) + Bu
-            if debug:
-                print("self.x")
-                print(self.x)
+                print("3 speeds", w_m_left,  w_m_right)
 
             self.x_coord[i] = self.x[0][0]
             self.y_coord[i] = self.x[1][0]
-        
+
         y_dict = {
             "x_coord": self.x_coord,
             "y_coord": self.y_coord
