@@ -12,7 +12,7 @@ class BLDC_Motor_Driver:
         self.bldc_motor    = bldc_motor_model_kk.BLDC_Motor(bldc_motor_data)
         self.pi_controller = pi_controller.PI_Controller(pi_controller_data)
 
-    def run_euler_simulation(self, dt, iterations, u_dict, noise=False):
+    def run_euler_simulation(self, dt, iterations, u_dict, noise=False, debug=False):
         self.w_m = np.zeros(iterations)
         self.i_a = np.zeros(iterations)
         self.i_b = np.zeros(iterations)
@@ -25,8 +25,9 @@ class BLDC_Motor_Driver:
 
         # Simulation main loop
         for i in range(iterations):
-            if i%1000 == 0:
-                print(str((i/iterations)*100)+"%")
+            if debug:
+                if i%1000 == 0:
+                    print(str((i/iterations)*100)+"%")
 
             w_ref = u_dict["w_ref"][i]
             T_l   = u_dict["T_l"][i]
@@ -44,7 +45,7 @@ class BLDC_Motor_Driver:
 
             # BLDC motor
             u_dict_dc_motor = {"v_s": np.array([self.v_s[i]]), 
-                      "T_l": np.array([T_l])}
+                               "T_l": np.array([T_l])}
 
             y_dict_dc_motor = self.bldc_motor.simulation_euler(dt, 1, u_dict_dc_motor)
 
@@ -83,7 +84,7 @@ if __name__ == "__main__":
 
 
     # Simulation parameters
-    dt = 0.01
+    dt = 0.001
     iterations = 10000
     t = np.ones(iterations)
     t = t*dt
@@ -92,7 +93,7 @@ if __name__ == "__main__":
 
 
     u_dict = {
-        "w_ref" : np.append(40*np.ones(int(iterations/2)), 10*np.ones(int(iterations/2))),
+        "w_ref" : np.append(30*np.ones(int(iterations/2)), 10*np.ones(int(iterations/2))),
         "T_l"   : 0*np.ones(iterations)
     }
 
