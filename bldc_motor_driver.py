@@ -12,9 +12,6 @@ class BLDC_Motor_Driver:
         self.bldc_motor    = bldc_motor_model_kk.BLDC_Motor(bldc_motor_data)
         self.pi_controller = pi_controller.PI_Controller(pi_controller_data)
 
-        self.simulation_output = {}
-
-
     def run_euler_simulation(self, dt, iterations, u_dict, noise=False):
         self.w_m = np.zeros(iterations)
         self.i_a = np.zeros(iterations)
@@ -64,7 +61,7 @@ class BLDC_Motor_Driver:
                 noise = np.random.normal(0, .1)
                 self.w_m[i] += noise
 
-        self.simulation_output = {
+        y_dict = {
             "w_m": self.w_m,        
             "i_a": self.i_a,                         # \
             "i_b": self.i_b,                         # - plot
@@ -75,7 +72,7 @@ class BLDC_Motor_Driver:
             "T_e": self.T_e,                         # - plot
         }
         
-        return self.simulation_output
+        return y_dict
 
 
 if __name__ == "__main__":
