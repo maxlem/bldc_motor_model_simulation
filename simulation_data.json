@@ -1,0 +1,49 @@
+{
+    "position_controller":
+    {
+        "pi_controller":
+        {
+            "K_p": 50, 
+            "T_i": 0.1, 
+            "init": 0,
+            "sat": 4,
+            "T_a": 0.02,
+            "anti": 0
+        },
+        "speed_controller":
+        {
+            "pi_controller":
+            {
+                "K_p": 10, 
+                "T_i": 0.5, 
+                "init": 0,
+                "sat": 12,
+                "T_a": 0.3,
+                "anti": 0
+            },
+            "bldc_motor":
+            {
+                "electrical":
+                {
+                    "R": 12.5,
+                    "L": 0.091,
+                    "K_e": 0.05
+                },
+                "mechanical":
+                {
+                    "J": 0.005,
+                    "K_t": 0.05,
+                    "K_f": 0.0000000138,
+                    "p": 2
+                },
+                "initial":
+                {
+                    "i_a": 0,
+                    "i_b": 0,
+                    "w_m": 0,
+                    "theta_m": 0
+                }
+            }
+        }
+    }
+}

@@ -176,7 +176,7 @@ class BLDC_Motor:
         self.x = np.matrix([[x1], [x2], [x3], [x4]])
 
 
-    def simulation_euler(self, dt, iterations, u_dict):
+    def simulation_euler(self, dt, iterations, u_dict, **kwargs):
         # Prepare arrays for signals
 
         # Windings currents
@@ -219,8 +219,9 @@ class BLDC_Motor:
 
         # Simulation
         for i in range(iterations):
-            # if (i%10000 == 0):
-            #     print(i, iterations)
+            if "show" in kwargs.keys() and kwargs["show"]:
+                if (i+1)%1000 == 0:
+                    print(str(((i+1)/iterations)*100)+"%")
 
             y = self.C*self.x
             
@@ -422,10 +423,11 @@ class BLDC_Motor:
 
 
 if __name__ == "__main__":
-    motor_data = json.load(open("./bldc_motor_data_kk_data.json"))
-    bldc_motor = BLDC_Motor(motor_data)
-    bldc_motor.check_back_emf_plot()
-    bldc_motor.check_inverter_function_plot()
+    # Simulation data
+    bldc_motor_data = json.load(open("./bldc_motor_data_kk_data.json"))
+    bldc_motor = BLDC_Motor(bldc_motor_data)
+    # bldc_motor.check_back_emf_plot()
+    # bldc_motor.check_inverter_function_plot()
     # exit()
 
     t_end = 100
@@ -437,6 +439,7 @@ if __name__ == "__main__":
     t = np.cumsum(t)
     t = t-dt
 
+    # Simulation input
     v_s = 12*np.ones(iterations)
     T_l = 0*np.ones(iterations)
     u_dict = {

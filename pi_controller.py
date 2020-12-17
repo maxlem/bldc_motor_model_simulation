@@ -33,21 +33,20 @@ class PI_Controller:
         return y
 
 
-    def simulation_euler_anti_windup(self, dt, iterations, u_dict):
-
+    def simulation_euler_anti_windup(self, dt, iterations, u_dict, **kwargs):
+        # Prepare arrays for signals
         y      = np.zeros(iterations)
         y_prim = np.zeros(iterations)
 
         for i in range(iterations):
+            if "show" in kwargs.keys() and kwargs["show"]:
+                if (i+1)%1000 == 0:
+                    print(str(((i+1)/iterations)*100)+"%")
+
             u      = u_dict["e"][i]
 
             y[i]   =              self.C*self.x + self.D*u
             self.x = self.x + dt*(self.A*self.x + self.B*u + self.anti)
-
-            # if   self.x > self.sat:
-            #     self.x = self.sat
-            # elif self.x < -self.sat:
-            #     self.x = -self.sat
 
             # anti wind-up system
             if   y[i] > self.sat:
@@ -65,5 +64,6 @@ class PI_Controller:
         
 
 if __name__ == "__main__":
+    # Simulation data
     pi_controller_data = json.load(open("./pi_controller_data.json"))
     pi_controller = PI_Controller(pi_controller_data)
