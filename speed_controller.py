@@ -1,4 +1,4 @@
-import bldc_motor_model_kk
+import bldc_motor_model
 import pi_controller
 import json
 import numpy as np
@@ -12,7 +12,7 @@ class Speed_Controller:
         bldc_motor_data    = speed_controller_data["bldc_motor"]
         pi_controller_data = speed_controller_data["pi_controller"]
 
-        self.bldc_motor    = bldc_motor_model_kk.BLDC_Motor(bldc_motor_data)
+        self.bldc_motor    = bldc_motor_model.BLDC_Motor(bldc_motor_data)
         self.pi_controller = pi_controller.PI_Controller(pi_controller_data)
 
 
