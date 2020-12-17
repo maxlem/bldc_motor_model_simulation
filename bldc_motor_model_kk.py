@@ -232,7 +232,7 @@ class BLDC_Motor:
             theta_m[i] = np.array(y)[4][0]
 
             # Get value of theta_m such that it is in range <0, 2pi>
-            theta_m[i] = self.__rem_2pi(theta_m[i])
+            # theta_m[i] = self.__rem_2pi(theta_m[i])
             theta_e[i] = self.__get_electrical_position(theta_m[i])
 
             # Hall sensors

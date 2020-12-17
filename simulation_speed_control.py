@@ -21,8 +21,15 @@ class Simulation:
         t = t-self.dt
         self.t = t
 
-        self.w_ref = np.append(40*np.ones(int(self.iterations/2)), 10*np.ones(int(self.iterations/2)))
-        self.T_l   = 0*np.ones(self.iterations)
+        self.w_ref = np.append(40*np.ones(int(self.iterations/2)), 40*np.ones(int(self.iterations/2)))
+        # self.w_ref = np.append(10*np.ones(int(self.iterations/5)), 
+        #             np.append(50*np.ones(int(self.iterations/5)), 
+        #             np.append(30*np.ones(int(self.iterations/5)), 
+        #             np.append(60*np.ones(int(self.iterations/5)), 80*np.ones(int(self.iterations/5))))))
+        self.T_l   = np.append(0.00*np.ones(int(self.iterations/4)), 
+                    np.append(0.025*np.ones(int(self.iterations/4)), 
+                    np.append(0.01*np.ones(int(self.iterations/4)), 
+                    0.03*np.ones(int(self.iterations/4)))))
 
         self.simulation_output = {}
 
@@ -82,6 +89,7 @@ class Simulation:
             "v_b": self.v_b,                         # - plot
             "v_c": self.v_c,                         # - plot
             "T_e": self.T_e,                         # - plot
+            "V_s": self.v_s,                         # - plot
         }
         
         return self.simulation_output, self.t
@@ -104,11 +112,14 @@ if __name__ == "__main__":
 
     # plot speed
     ylim_coeff = 1.2
-    plt.plot(t_meas, simulation.w_ref, "-r", label="ωref")
-    plt.plot(t_meas, simulation_output_def["w_m"], "-g", label="ωm")
+    plt.plot(t_meas, simulation_output_def["V_s"],  label="Vs[V]")
+    plt.plot(t_meas, simulation.w_ref, "-r", label="ωref[rad/s]")
+    plt.plot(t_meas, simulation_output_def["w_m"], "-b", label="ωm[rad/s]")
+    plt.plot(t_meas, simulation.T_l*1000, "-k", label="TL[mNm]")
     # plt.plot(t_meas, P, "-g", label="ωm")
     # plt.plot(t_meas, P2, "-b", label="ωm")
     plt.xlim([0, t_meas[-1]])
+    # plt.ylim([np.min(simulation_output_def["V_s"])*ylim_coeff, np.max(simulation.w_ref)*ylim_coeff])
     plt.ylim([np.min(simulation_output_def["w_m"])*ylim_coeff, np.max(simulation_output_def["w_m"])*ylim_coeff])
     plt.xlabel("t[s]")
     plt.ylabel("ω[rad/s]")
