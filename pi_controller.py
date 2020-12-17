@@ -43,8 +43,7 @@ class PI_Controller:
                 if (i+1)%1000 == 0:
                     print(str(((i+1)/iterations)*100)+"%")
 
-            u      = u_dict["e"][i]
-
+            u = u_dict["e"][i]
             y[i]   =              self.C*self.x + self.D*u
             self.x = self.x + dt*(self.A*self.x + self.B*u + self.anti)
 

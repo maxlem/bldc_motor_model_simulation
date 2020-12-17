@@ -15,7 +15,7 @@ class Position_Controller:
         self.speed_controller = speed_controller.Speed_Controller(speed_controller_data)
 
 
-    def simulation(self, dt, iterations, u_dict):
+    def simulation(self, dt, iterations, u_dict, **kwargs):
         # Prepare arrays for signals
         theta_m = np.zeros(iterations)
         w_ref   = np.zeros(iterations)
@@ -31,8 +31,9 @@ class Position_Controller:
 
         # Simulation main loop
         for i in range(iterations):
-            if (i+1)%1000 == 0:
-                print(str(((i+1)/iterations)*100)+"%")
+            if "show" in kwargs.keys() and kwargs["show"]:
+                if (i+1)%1000 == 0:
+                    print(str(((i+1)/iterations)*100)+"%")
 
             # Feedback loop sum block
             if i == 0:
