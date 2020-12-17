@@ -31,8 +31,8 @@ class Position_Controller:
 
         # Simulation main loop
         for i in range(iterations):
-            if i%1000 == 0:
-                print(str((i/iterations)*100)+"%")
+            if (i+1)%1000 == 0:
+                print(str(((i+1)/iterations)*100)+"%")
 
             # Feedback loop sum block
             if i == 0:
